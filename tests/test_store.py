@@ -24,3 +24,9 @@ def test_short_ids_and_errors(tmp_path):
         store.get("zzzzzz")
     with pytest.raises(ValueError):
         store.set_status(job.id, "hired-by-magic")
+
+
+def test_config_saved_with_windows_bom_still_loads(cfg_path):
+    from jobcopilot.config import load_config
+    cfg_path.write_bytes(b"\xef\xbb\xbf" + cfg_path.read_bytes())
+    assert load_config(cfg_path).name == "Sam Example"

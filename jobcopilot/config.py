@@ -37,7 +37,7 @@ def load_config(path: str | Path = "config.toml") -> Config:
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"{path} not found. Copy config.example.toml to {path} and fill in your details.")
-    raw = tomllib.loads(path.read_text(encoding="utf-8"))
+    raw = tomllib.loads(path.read_text(encoding="utf-8-sig"))   # tolerate a Windows BOM
     me, search, ai = raw.get("me", {}), raw.get("search", {}), raw.get("ai", {})
     base = path.parent
     return Config(
