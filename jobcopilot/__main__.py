@@ -78,8 +78,14 @@ def _row(job: Job) -> str:
     where = "remote" if job.remote else (job.location or "-")
     rel = "-" if job.relevance is None or job.relevance < 0 else f"{job.relevance:g}"
     fit = f"{job.match_score}" if job.match_score is not None else ""
-    return (f"{job.short_id}  {rel:>3}  {fit:>3}  {job.status:<11}  {job.title[:48]:<48}  "
-            f"{job.company[:24]:<24}  {where[:20]:<20}  {job.source}")
+    return (f"{job.short_id}  {rel:>3}  {fit:>3}  {job.status:<11}  {_cut(job.title, 40)}  "
+            f"{_cut(job.company, 18)}  {_cut(where, 14).rstrip()}")
+
+
+def _cut(text: str, width: int) -> str:
+    """Fit text into a fixed-width column (the list must fit a normal terminal window)."""
+    text = " ".join(text.split())
+    return (text[: width - 1] + "…" if len(text) > width else text).ljust(width)
 
 
 def cmd_list(store: Store, cfg: Config, args) -> int:
@@ -89,10 +95,11 @@ def cmd_list(store: Store, cfg: Config, args) -> int:
         jobs = [j for j in jobs if (j.relevance or -1) > 0 or j.source == "manual"]
     if not args.status:
         jobs = [j for j in jobs if j.status != "skipped"]
-    print(f"{'id':<6}  {'rel':>3}  {'fit':>3}  {'status':<11}  {'title':<48}  {'company':<24}  {'where':<20}  source")
+    print(f"{'id':<6}  {'rel':>3}  {'fit':>3}  {'status':<11}  {'title':<40}  {'company':<18}  where")
     for job in jobs[: args.limit]:
         print(_row(job))
-    print(f"\n{len(jobs)} job(s). rel = keyword relevance (free), fit = AI match score (after `match`).")
+    print(f"\n{len(jobs)} job(s). rel = keyword relevance (free), fit = AI match score (after `match`).\n"
+          "Details and source: python -m jobcopilot show <id>")
     return 0
 
 
