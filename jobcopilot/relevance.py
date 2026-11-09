@@ -26,9 +26,14 @@ def score(job: Job, cfg: Config) -> tuple[float | None, list[str]]:
         if contains(text, term):
             return None, [f"excluded: ad mentions '{term}'"]
 
-    if cfg.remote_only and not job.remote and not any(contains(text, t) for t in ("remote", "homeoffice",
-                                                                                     "home office", "home-office")):
-        return None, ["excluded: not remote"]
+    # Location: a job counts as remote only if the job board marks it remote (a perk like
+    # "mobiles Arbeiten" in the text is not enough). Other jobs must be in a nearby place.
+    nearby = any(contains(job.location, place) for place in cfg.nearby_locations)
+    if job.source != "manual" and not job.remote:
+        if cfg.remote_only and not nearby:
+            return None, [f"excluded: not remote and not nearby ({job.location or 'no location'})"]
+        if nearby:
+            reasons.append(f"nearby: {job.location}")
     if job.source == "remotive" and cfg.remote_regions:
         region = job.location.lower()
         if region and not any(r.lower() in region for r in cfg.remote_regions):

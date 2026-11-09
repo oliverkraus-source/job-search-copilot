@@ -79,3 +79,13 @@ def test_exclusions_win(cfg):
 def test_remote_region_filter_drops_us_only_jobs(cfg):
     assert score(make("Helpdesk Agent", remote=True, source="remotive", location="USA Only"), cfg)[0] is None
     assert score(make("Helpdesk Agent", remote=True, source="remotive", location="Europe"), cfg)[0] > 0
+
+
+def test_remote_only_needs_the_remote_flag_or_a_nearby_location(cfg):
+    cfg.remote_only = True
+    cfg.nearby_locations = ["mainz"]
+    perk_only = make("IT-Support", "mobiles Arbeiten und Homeoffice möglich", location="Berlin")
+    assert score(perk_only, cfg)[0] is None                       # a perk in the text is not "remote"
+    assert score(make("IT-Support", location="Mainz"), cfg)[0] > 0
+    assert score(make("IT-Support", remote=True, location="Berlin"), cfg)[0] > 0
+    assert score(make("IT-Support", source="manual", location="Berlin"), cfg)[0] > 0

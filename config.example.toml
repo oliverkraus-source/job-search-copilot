@@ -26,7 +26,10 @@ exclude_title = ["Senior", "Sr", "Lead", "Principal", "Head of", "Staff", "Manag
 # Jobs whose AD mentions one of these are dropped
 exclude_text = ["4+ years", "5+ years", "7+ years", "10+ years", "mindestens 4 Jahre", "mindestens 5 Jahre",
                 "mehrjährige Berufserfahrung", "several years of experience"]
-remote_only = false
+remote_only = false                     # true: only remote jobs, plus non-remote jobs in nearby_locations
+# Non-remote jobs in these places are kept even with remote_only = true. Ads you `add` are always kept.
+nearby_locations = ["Kaiserslautern", "Mainz", "Bad Kreuznach", "Alzey", "Worms", "Mannheim", "Ludwigshafen",
+                    "Frankfurt", "Wiesbaden", "Darmstadt", "Rockenhausen", "Bingen", "Kirchheimbolanden"]
 # For remote jobs from Remotive: keep only these candidate regions (drops "USA only" etc.)
 remote_regions = ["Worldwide", "Anywhere", "Europe", "EMEA", "Germany", "EU", "CET"]
 

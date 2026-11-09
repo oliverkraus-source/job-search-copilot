@@ -20,6 +20,7 @@ class Config:
     exclude_title: list[str] = field(default_factory=list)
     exclude_text: list[str] = field(default_factory=list)
     remote_only: bool = False
+    nearby_locations: list[str] = field(default_factory=list)
     remote_regions: list[str] = field(default_factory=list)
     data_dir: Path = Path("data")
     letters_dir: Path = Path("applications")
@@ -54,6 +55,7 @@ def load_config(path: str | Path = "config.toml") -> Config:
         exclude_title=[t.lower() for t in search.get("exclude_title", [])],
         exclude_text=[t.lower() for t in search.get("exclude_text", [])],
         remote_only=search.get("remote_only", False), remote_regions=search.get("remote_regions", []),
+        nearby_locations=[t.lower() for t in search.get("nearby_locations", [])],
         data_dir=base / raw.get("paths", {}).get("data", "data"),
         letters_dir=base / raw.get("paths", {}).get("letters", "applications"),
     )
