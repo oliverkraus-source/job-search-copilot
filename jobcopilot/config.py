@@ -30,6 +30,11 @@ class Config:
 
     def cv_text(self) -> str:
         from jobmatch.documents import load_text
+        if not self.cv_path.exists():
+            raise FileNotFoundError(
+                f"Your CV was not found at {self.cv_path}. Put your CV file there, "
+                "or change the `cv = ...` line in config.toml to where it is."
+            )
         return load_text(self.cv_path)
 
 

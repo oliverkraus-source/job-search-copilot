@@ -61,3 +61,12 @@ def test_unknown_id_and_missing_config_give_clear_errors(cfg_path, tmp_path, cap
     assert "No job with id" in capsys.readouterr().err
     assert cli.main(["--config", str(tmp_path / "missing.toml"), "list"]) == 1
     assert "Copy config.example.toml" in capsys.readouterr().err
+
+
+def test_missing_cv_gives_a_helpful_error(cfg_path, monkeypatch, capsys):
+    monkeypatch.setattr(sources, "fetch_arbeitnow", lambda: list(JOBS))
+    monkeypatch.setattr(sources, "fetch_remotive", lambda: [])
+    run(cfg_path, "fetch")
+    (cfg_path.parent / "cv.md").unlink()
+    assert run(cfg_path, "draft", JOBS[0].short_id) == 1
+    assert "Your CV was not found" in capsys.readouterr().err
