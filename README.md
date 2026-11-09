@@ -86,7 +86,10 @@ shortlist, draft, mark, stats, export) on fixture data.
 
 - Keyword rules are blunt. They need tuning per person, and good jobs with unusual titles can be missed.
   `list --all` shows what was excluded and why.
-- The verified-quote check proves a claim is *grounded* in the CV, not that the wording is fair. Read
-  every letter before sending.
+- The verified-quote check proves a claim is *grounded* in the CV, not that the wording around it is fair.
+  Found in the first real letter: "Für Demos und Prototypen im Pre-Sales bringe ich praktische Erfahrung mit"
+  quoted real project facts, but its framing implied pre-sales experience the CV doesn't show. The prompt now
+  forbids implying experience in the job's own field, but the lesson stands: read every letter before
+  sending.
 - The Bundesagentur für Arbeit job search isn't integrated: its public endpoint rejected documented
   requests. Use `add` for ads from the Jobbörse.

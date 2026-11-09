@@ -33,6 +33,9 @@ experience. No generic phrases ("hiermit bewerbe ich mich", "I am writing to app
 - Every factual statement about the candidate (jobs, training, skills, projects, numbers, \
 languages) must come from the CV. List each one in `claims` with a word-for-word quote from the \
 CV. Never invent experience, employers, degrees, numbers or certificates.
+- Do not imply experience in the job's own field (e.g. pre-sales, customer projects, production \
+systems, a named platform) unless the CV shows it. Present personal projects as personal projects \
+("in eigenen Projekten", "in my own projects"), not as professional or client work.
 - Be honest about the career change and about gaps; show motivation and how the candidate is \
 closing them. Do not assume the candidate's gender, age or background beyond the CV.
 - If a portfolio URL is given, mention it once. End with the candidate's name."""
