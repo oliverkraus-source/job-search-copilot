@@ -1,0 +1,32 @@
+[project]
+name = "jobcopilot"
+version = "0.1.0"
+description = "Job search copilot: finds and ranks jobs, drafts application letters checked against your CV, tracks everything. You send."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=2.6",
+    "httpx>=0.27",
+    "pydantic>=2",
+    "jobmatch @ git+https://github.com/oliverkraus-source/job-match-agent.git",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["jobcopilot*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

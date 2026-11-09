@@ -1,0 +1,38 @@
+# Copy this file to config.toml and fill in your details. config.toml is not committed.
+
+[me]
+name = "Alex Becker"
+cv = "examples/cv_example.md"          # path to your CV (.md, .txt or .pdf)
+email = "alex@example.com"
+portfolio_url = "https://example.github.io"
+
+[search]
+# The TITLE must contain at least one IT role word (+3), otherwise the job is dropped
+role_keywords = ["IT-Support", "IT Support", "1st Level", "First Level", "2nd Level", "Helpdesk", "Help Desk",
+                 "Service Desk", "Support Specialist", "Technical Support", "Tech Support", "Application Support",
+                 "Fachinformatiker", "Fachinformatikerin", "Systemadministrator", "IT-Administrator",
+                 "Anwendungsentwicklung", "Systemintegration", "Developer", "Entwickler", "Software Engineer",
+                 "Python", "AI Engineer", "KI", "Data Analyst", "Datenanalyse", "QA", "Tester"]
+# Entry-level words in the TITLE add +2
+level_keywords = ["Junior", "Trainee", "Ausbildung", "Azubi", "Auszubildende", "Quereinsteiger", "Einsteiger",
+                  "Entry Level", "Entry-Level", "Associate", "Umschulung"]
+# Jobs whose AD mentions these get +1 each (max +4)
+text_keywords = ["Quereinsteiger", "career changer", "entry level", "Einsteiger", "no degree",
+                 "Python", "German", "Deutsch", "English", "Englisch", "Ticketsystem", "ticket"]
+# Jobs whose TITLE contains one of these are dropped
+exclude_title = ["Senior", "Sr", "Lead", "Principal", "Head of", "Staff", "Manager", "Director", "Architect",
+                 "Werkstudent", "Werkstudentenstelle", "Working Student", "Business Developer", "Freelance", "selbständig", "selbständiger", "Praktikum", "Internship",
+                 "Italian", "French", "Spanish", "Dutch", "Polish", "Swedish", "Danish", "Norwegian", "Finnish"]
+# Jobs whose AD mentions one of these are dropped
+exclude_text = ["4+ years", "5+ years", "7+ years", "10+ years", "mindestens 4 Jahre", "mindestens 5 Jahre",
+                "mehrjährige Berufserfahrung", "several years of experience"]
+remote_only = false
+# For remote jobs from Remotive: keep only these candidate regions (drops "USA only" etc.)
+remote_regions = ["Worldwide", "Anywhere", "Europe", "EMEA", "Germany", "EU", "CET"]
+
+[ai]
+model = "claude-opus-5-5"              # or "claude-haiku-5-5" for much cheaper runs
+
+[paths]
+data = "data"                           # local database
+letters = "applications"                # match reports and letters
