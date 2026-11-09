@@ -108,7 +108,11 @@ def cmd_show(store: Store, cfg: Config, args) -> int:
     print(f"{job.title}\n{job.company} · {'remote' if job.remote else job.location} · {job.source} · "
           f"posted {job.posted_at}\n{job.url}\n\nStatus: {job.status}   Relevance: {job.relevance}   "
           f"Fit: {job.match_score}\nWhy: {'; '.join(job.relevance_reasons)}\n")
-    print(job.description[:2500] + ("\n[...]" if len(job.description) > 2500 else ""))
+    if args.full or len(job.description) <= 2500:
+        print(job.description)
+    else:
+        print(job.description[:2500] + f"\n[... {len(job.description) - 2500} more characters. "
+              f"How to apply is often at the end: show {job.short_id} --full]")
     return 0
 
 
@@ -227,7 +231,9 @@ def build_parser() -> argparse.ArgumentParser:
     ls.add_argument("--all", action="store_true", help="include jobs the filter excluded")
     ls.add_argument("--limit", type=int, default=30)
 
-    sub.add_parser("show", help="details of one job").add_argument("id")
+    sh = sub.add_parser("show", help="details of one job")
+    sh.add_argument("id")
+    sh.add_argument("--full", action="store_true", help="print the whole ad")
     for name, status in (("shortlist", "shortlisted"), ("skip", "skipped")):
         sp = sub.add_parser(name, help=f"mark job(s) as {status}")
         sp.add_argument("ids", nargs="+")
